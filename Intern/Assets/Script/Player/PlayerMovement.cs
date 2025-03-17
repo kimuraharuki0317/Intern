@@ -22,13 +22,13 @@ public class PlayerMovement : MonoBehaviour
     /// 接地確認コンポーネント
     /// </summary>
     [SerializeField] 
-    CheckGround checkGround;
+    CheckGround CheckGround;
 
     /// <summary>
     /// Rigidbodyコンポーネント
     /// </summary>
     [SerializeField] 
-    Rigidbody rb;
+    Rigidbody Rb;
 
     void Update()
     {
@@ -71,8 +71,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // スペースキー押下かつ接地していたらジャンプ
-        if (Input.GetKeyDown(KeyCode.Space) && checkGround.GetHitGround()) {
-            rb.AddForce(Jump_Power * Vector3.up, ForceMode.Impulse);
+        if (Input.GetKeyDown(KeyCode.Space) && CheckGround.GetHitGround()) {
+            Rb.AddForce(Jump_Power * Vector3.up, ForceMode.Impulse);
         }
     }
 }
