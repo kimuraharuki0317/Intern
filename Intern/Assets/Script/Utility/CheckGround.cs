@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// オブジェクトが地面に接触しているかを検出するためのクラスです。
+/// </summary>
 public class CheckGround : MonoBehaviour
 {
     /// <summary>
     /// 接地判定用コライダー
     /// </summary>
     [SerializeField]
-    BoxCollider groundCheckDistance;
+    BoxCollider GroundCheckDistance;
 
     /// <summary>
     /// 接地しているか
@@ -16,33 +19,31 @@ public class CheckGround : MonoBehaviour
     /// <summary>
     /// 地面オブジェクトのタグ
     /// </summary>
-    const string groundTag = "Ground";
+    const string Ground_Tag = "Ground";
 
     /// <summary>
     /// 地面に接触しているかを返す
     /// </summary>
     /// <returns>地面に接触しているか(bool)</returns>
-    public bool HitGround()
-    {
-        return hitGround;
-    }
+    public bool GetHitGround()
+        => hitGround;
 
     /// <summary>
-    /// 地面のタグを持つコライダーが入ってきたらhitGroundをtrueにする
+    /// 地面のタグを持つコライダーが入ってきたら hitGround を true にする
     /// </summary>
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == groundTag){
+        if (other.gameObject.tag == Ground_Tag) {
             hitGround = true;
         }
     }
 
     /// <summary>
-    /// 地面のタグを持つコライダーが出たらhitGroundをtrueにする
+    /// 地面のタグを持つコライダーが出たら hitGround を false にする
     /// </summary>
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == groundTag){
+        if (other.gameObject.tag == Ground_Tag) {
             hitGround = false;
         }
     }

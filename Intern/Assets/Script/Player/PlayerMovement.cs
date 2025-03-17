@@ -2,78 +2,79 @@
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーを動かす機能を有するクラスです。
+/// WASDで移動、スペースキーでジャンプします。
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     /// <summary>
     /// プレイヤーの移動速度
     /// </summary>
-    const float moveSpeed = 3.0f;
+    const float Move_Speed = 3.0f;
 
     /// <summary>
     /// プレイヤーのジャンプ力
     /// </summary>
-    const float jumpPower = 6.0f;
+    const float Jump_Power = 6.0f;
 
     /// <summary>
     /// 接地確認コンポーネント
     /// </summary>
+    [SerializeField] 
     CheckGround checkGround;
 
     /// <summary>
     /// Rigidbodyコンポーネント
     /// </summary>
+    [SerializeField] 
     Rigidbody rb;
-
-    void Start()
-    {
-        checkGround = GetComponent<CheckGround>();
-        rb = GetComponent<Rigidbody>();
-    }
 
     void Update()
     {
         // 移動ベクトル
-        Vector3 moveVector = Vector3.zero;
+        var moveVector = Vector3.zero;
 
         // カメラのTransform取得
-        Transform cameraTransform = Camera.main.transform;
+        var cameraTransform = Camera.main.transform;
 
         // Wキー（前方移動）
-        if (Input.GetKey(KeyCode.W)){
+        if (Input.GetKey(KeyCode.W)) {
             moveVector += cameraTransform.forward;
         }
 
         // Sキー（後方移動）
-        if (Input.GetKey(KeyCode.S)){
+        if (Input.GetKey(KeyCode.S)) {
             moveVector -= cameraTransform.forward;
         }
 
         // Dキー（右移動）
-        if (Input.GetKey(KeyCode.D)){
+        if (Input.GetKey(KeyCode.D)) {
             moveVector += cameraTransform.right;
         }
 
         // Aキー（左移動）
-        if (Input.GetKey(KeyCode.A)){
+        if (Input.GetKey(KeyCode.A)) {
             moveVector -= cameraTransform.right;
         }
 
-        if(moveVector!=Vector3.zero)
-        {
+
+        if(moveVector != Vector3.zero) {
+
+            // Y 成分を 0 にする
             moveVector.y = 0;
 
-            //移動方向に向ける
+            // 移動方向に向ける
             transform.forward = moveVector;
 
-            //実際に移動させる
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            // 実際に移動させる
+            transform.position += transform.forward * Move_Speed * Time.deltaTime;
         }
 
 
         // スペースキー押下かつ接地していたらジャンプ
-        if (Input.GetKeyDown(KeyCode.Space) && checkGround.HitGround())
-        {
-            rb.AddForce(jumpPower * Vector3.up, ForceMode.Impulse);
+        if (Input.GetKeyDown(KeyCode.Space) && checkGround.GetHitGround()) {
+            rb.AddForce(Jump_Power * Vector3.up, ForceMode.Impulse);
         }
     }
 }

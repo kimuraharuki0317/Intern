@@ -773,6 +773,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177cbe8b1bfd0b34e97281feffa67a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkGround: {fileID: 1878165711}
+  rb: {fileID: 1878165705}
 --- !u!114 &1878165711
 MonoBehaviour:
   m_ObjectHideFlags: 0
