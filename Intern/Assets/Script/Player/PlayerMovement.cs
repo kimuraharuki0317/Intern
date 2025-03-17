@@ -58,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
             moveVector -= cameraTransform.right;
         }
 
-
         if(moveVector != Vector3.zero) {
 
             // Y 成分を 0 にする
@@ -70,7 +69,6 @@ public class PlayerMovement : MonoBehaviour
             // 実際に移動させる
             transform.position += transform.forward * Move_Speed * Time.deltaTime;
         }
-
 
         // スペースキー押下かつ接地していたらジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && checkGround.GetHitGround()) {
