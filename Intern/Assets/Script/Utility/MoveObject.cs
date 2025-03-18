@@ -92,11 +92,11 @@ public class MoveObject : MonoBehaviour
             var distance = Vector3.Magnitude(returnPosition - transform.position);
 
             // 目標地点外か
-            if (Return_Point_Range < distance){
+            if (Return_Point_Range < distance) {
                 // 移動させる
                 transform.position += moveVector * Time.deltaTime * MoveSpeed;
             }
-            else{
+            else {
                 // 往復を切り替える
                 returning = true;
             }
@@ -135,7 +135,7 @@ public class MoveObject : MonoBehaviour
                 if (returning) {
                     rb.AddForce(-moveVector * MoveSpeed, ForceMode.Impulse);
                 }
-                else{
+                else {
                     rb.AddForce(moveVector * MoveSpeed,ForceMode.Impulse);
                 }
             }
