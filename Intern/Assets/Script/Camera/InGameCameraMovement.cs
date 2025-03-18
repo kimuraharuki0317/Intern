@@ -33,6 +33,12 @@ public class InGameCameraMovement : MonoBehaviour
     /// </summary>
     const float Camera_Following_Speed = 3.0f;
 
+    void Start()
+    {
+        Cursor.visible = false;
+        transform.position = PlayerTransform.position + Vector3.back;
+    }
+
     void Update()
     {
         // プレイヤー注視
