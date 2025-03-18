@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 /// <summary>
 /// オブジェクトに2点を往復させる
@@ -48,19 +49,11 @@ public class MoveObject : MonoBehaviour
     /// </summary>
     const float Return_Point_Range = 0.3f;
 
-    /// <summary>
-    /// 初期状態の2点の距離
-    /// </summary>
-    float initDistance;
-
     void Start()
     {
         // 初期座標、折り返し座標の決定
         initPosition = transform.position;
         returnPosition = ReturnTransform.position;
-
-        // 初期距離の計算
-        initDistance = Vector3.Magnitude(returnPosition - initPosition);
 
         // Ratioをもとに移動させる
         transform.position += (returnPosition - initPosition) * InitRatio;
@@ -71,31 +64,21 @@ public class MoveObject : MonoBehaviour
         // 移動方向を求める
         moveVector = Vector3.Normalize(returnPosition - initPosition);
 
+        // 目標地点との距離を求める
+        var distance = Vector3.Magnitude(returnPosition - transform.position);
         // 折り返し中か
         if (returning) {
-            // 目標地点との距離を求める
-            var distance = Vector3.Magnitude(initPosition - transform.position);
+            distance = Vector3.Magnitude(initPosition - transform.position);
+            moveVector *= -1;
+        }
 
-            // 目標地点外か
-            if (Return_Point_Range < distance) {
-                // 移動させる
-                transform.position -= moveVector * Time.deltaTime * MoveSpeed;
-            } else {
-                // 往復を切り替える
-                returning = false;
-            }
+        // 目標地点外か
+        if (Return_Point_Range < distance) {
+            // 移動させる
+            transform.position += moveVector * Time.deltaTime * MoveSpeed;
         } else {
-            // 目標地点との距離を求める
-            var distance = Vector3.Magnitude(returnPosition - transform.position);
-
-            // 目標地点外か
-            if (Return_Point_Range < distance) {
-                // 移動させる
-                transform.position += moveVector * Time.deltaTime * MoveSpeed;
-            } else {
-                // 往復を切り替える
-                returning = true;
-            }
+            // 往復を切り替える
+            returning = !returning;
         }
     }
 
@@ -124,14 +107,11 @@ public class MoveObject : MonoBehaviour
             // 慣性を乗せるために Rigidbody コンポーネントを参照
             var rb = other.gameObject.GetComponent<Rigidbody>();
 
-            // null参照しないよう確認
-            if (rb != null) {
-                // そのときの移動方向と同じ方向に力を加える
-                if (returning) {
-                    rb.AddForce(-moveVector * MoveSpeed, ForceMode.Impulse);
-                } else {
-                    rb.AddForce(moveVector * MoveSpeed, ForceMode.Impulse);
-                }
+            // そのときの移動方向と同じ方向に力を加える
+            if (returning) {
+                rb.AddForce(-moveVector * MoveSpeed, ForceMode.Impulse);
+            } else {
+                rb.AddForce(moveVector * MoveSpeed, ForceMode.Impulse);
             }
         }
     }
