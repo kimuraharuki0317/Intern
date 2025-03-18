@@ -73,7 +73,7 @@ public class MoveObject : MonoBehaviour
         moveVector = Vector3.Normalize(returnPosition - initPosition);
 
         // 折り返し中か
-        if(returning) {
+        if (returning) {
             // 目標地点との距離を求める
             var distance = Vector3.Magnitude(initPosition - transform.position);
 
@@ -127,7 +127,7 @@ public class MoveObject : MonoBehaviour
             var rb = other.gameObject.GetComponent<Rigidbody>();
 
             // null参照しないよう確認
-            if(rb != null)
+            if (rb != null)
             {
                 // そのときの移動方向と同じ方向に力を加える
                 if (returning) {

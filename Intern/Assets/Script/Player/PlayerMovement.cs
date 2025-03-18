@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
             moveVector -= cameraTransform.right;
         }
 
-        if(moveVector != Vector3.zero) {
+        if (moveVector != Vector3.zero) {
 
             // Y 成分を 0 にする
             moveVector.y = 0;

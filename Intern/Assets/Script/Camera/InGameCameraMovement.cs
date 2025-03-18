@@ -52,7 +52,7 @@ public class InGameCameraMovement : MonoBehaviour
         var mouseMoveY = Input.GetAxis("Mouse Y");
         
         // 下、上に行き過ぎないよう制限をかける
-        if( -0.9f < transform.forward.y && transform.forward.y < -0.1f) {
+        if (-0.9f < transform.forward.y && transform.forward.y < -0.1f) {
             transform.RotateAround(PlayerTransform.position, Camera.main.transform.right, mouseMoveY * Time.deltaTime * Mouse_Sensitivity_Vertical);
         } else {
             //行き過ぎていたら上・下に動かして範囲内に動かす
@@ -63,9 +63,9 @@ public class InGameCameraMovement : MonoBehaviour
         var cameraToPlayer = PlayerTransform.position - transform.position;
         var distance = cameraToPlayer.magnitude;
 
-        if(Camera_Distance < distance) {
+        if (Camera_Distance < distance) {
             transform.position += cameraToPlayer.normalized * Time.deltaTime * Camera_Following_Speed;
-        } else if(distance < Camera_Distance) {
+        } else if (distance < Camera_Distance) {
             transform.position -= cameraToPlayer.normalized * Time.deltaTime * Camera_Following_Speed;
         }
     }
