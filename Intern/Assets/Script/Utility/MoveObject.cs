@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// オブジェクトに2点を往復させる
@@ -126,8 +125,7 @@ public class MoveObject : MonoBehaviour
             var rb = other.gameObject.GetComponent<Rigidbody>();
 
             // null参照しないよう確認
-            if (rb != null)
-            {
+            if (rb != null) {
                 // そのときの移動方向と同じ方向に力を加える
                 if (returning) {
                     rb.AddForce(-moveVector * MoveSpeed, ForceMode.Impulse);
