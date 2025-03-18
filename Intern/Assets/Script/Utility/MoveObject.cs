@@ -133,7 +133,7 @@ public class MoveObject : MonoBehaviour
                 if (returning) {
                     rb.AddForce(-moveVector * MoveSpeed, ForceMode.Impulse);
                 } else {
-                    rb.AddForce(moveVector * MoveSpeed,ForceMode.Impulse);
+                    rb.AddForce(moveVector * MoveSpeed, ForceMode.Impulse);
                 }
             }
         }

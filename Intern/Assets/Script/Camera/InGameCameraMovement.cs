@@ -46,7 +46,7 @@ public class InGameCameraMovement : MonoBehaviour
 
         // カメラ横回転
         var mouseMoveX = Input.GetAxis("Mouse X");
-        transform.RotateAround(PlayerTransform.position , Vector3.up , mouseMoveX * Time.deltaTime * Mouse_Sensitivity_Horizonal);
+        transform.RotateAround(PlayerTransform.position, Vector3.up, mouseMoveX * Time.deltaTime * Mouse_Sensitivity_Horizonal);
 
         // カメラ縦回転
         var mouseMoveY = Input.GetAxis("Mouse Y");
@@ -61,12 +61,12 @@ public class InGameCameraMovement : MonoBehaviour
 
         // 追従処理
         var cameraToPlayer = PlayerTransform.position - transform.position;
-        var distance = (cameraToPlayer).magnitude;
+        var distance = cameraToPlayer.magnitude;
 
         if(Camera_Distance < distance) {
             transform.position += cameraToPlayer.normalized * Time.deltaTime * Camera_Following_Speed;
         } else if(distance < Camera_Distance) {
-            transform .position -= cameraToPlayer.normalized * Time.deltaTime * Camera_Following_Speed;
+            transform.position -= cameraToPlayer.normalized * Time.deltaTime * Camera_Following_Speed;
         }
     }
 }
