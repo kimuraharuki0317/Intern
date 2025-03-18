@@ -21,7 +21,7 @@ public class MoveObject : MonoBehaviour
     /// <summary>
     /// 初期の移動割合
     /// </summary>
-    [SerializeField,Range(0,1)]
+    [SerializeField, Range(0, 1)]
     float InitRatio;
 
     /// <summary>
@@ -81,8 +81,7 @@ public class MoveObject : MonoBehaviour
             if (Return_Point_Range < distance) {
                 // 移動させる
                 transform.position -= moveVector * Time.deltaTime * MoveSpeed;
-            }
-            else {
+            } else {
                 // 往復を切り替える
                 returning = false;
             }
@@ -95,8 +94,7 @@ public class MoveObject : MonoBehaviour
             if (Return_Point_Range < distance) {
                 // 移動させる
                 transform.position += moveVector * Time.deltaTime * MoveSpeed;
-            }
-            else {
+            } else {
                 // 往復を切り替える
                 returning = true;
             }
@@ -134,8 +132,7 @@ public class MoveObject : MonoBehaviour
                 // そのときの移動方向と同じ方向に力を加える
                 if (returning) {
                     rb.AddForce(-moveVector * MoveSpeed, ForceMode.Impulse);
-                }
-                else {
+                } else {
                     rb.AddForce(moveVector * MoveSpeed,ForceMode.Impulse);
                 }
             }
