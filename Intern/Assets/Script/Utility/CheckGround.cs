@@ -9,7 +9,7 @@ public class CheckGround : MonoBehaviour
     /// 接地判定用コライダー
     /// </summary>
     [SerializeField]
-    BoxCollider GroundCheckDistance;
+    BoxCollider Collider;
 
     /// <summary>
     /// 接地しているか
