@@ -85,8 +85,7 @@ public class MoveObject : MonoBehaviour
                 // 往復を切り替える
                 returning = false;
             }
-        }
-        else {
+        } else {
             // 目標地点との距離を求める
             var distance = Vector3.Magnitude(returnPosition - transform.position);
 
