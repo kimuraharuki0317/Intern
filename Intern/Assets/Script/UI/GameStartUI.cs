@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameStartUI : MonoBehaviour
 {
     /// <summary>
-    /// シーン遷移までのディレイ
+    /// UI非表示までの時間
     /// </summary>
     const float Destroy_Delay = 3.0f;
 
