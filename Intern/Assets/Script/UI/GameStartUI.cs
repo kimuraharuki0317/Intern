@@ -19,7 +19,6 @@ public class GameStartUI : MonoBehaviour
         StartCoroutine(DestroyObject());
     }
 
-
     /// <summary>
     // 呼び出されてからScene_Trandition_Delay秒後に消す
     /// </summary>
