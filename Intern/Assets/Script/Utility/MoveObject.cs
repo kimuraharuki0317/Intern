@@ -61,16 +61,22 @@ public class MoveObject : MonoBehaviour
 
     void Update()
     {
-        // 移動方向を求める
-        moveVector = Vector3.Normalize(returnPosition - initPosition);
+        //目的地を定める
+        var targetposiyion = returnPosition;
+        // 折り返し中か
+        if (returning){
+            targetposiyion = initPosition;
+        }
 
         // 目標地点との距離を求める
         var distance = Vector3.Magnitude(returnPosition - transform.position);
         // 折り返し中か
         if (returning) {
             distance = Vector3.Magnitude(initPosition - transform.position);
-            moveVector *= -1;
         }
+
+        // 移動方向を求める
+        moveVector = Vector3.Normalize(targetposiyion - transform.position);
 
         // 目標地点外か
         if (Return_Point_Range < distance) {
@@ -79,6 +85,8 @@ public class MoveObject : MonoBehaviour
         } else {
             // 往復を切り替える
             returning = !returning;
+            //回転させる
+            transform.Rotate(0, 180, 0);
         }
     }
 

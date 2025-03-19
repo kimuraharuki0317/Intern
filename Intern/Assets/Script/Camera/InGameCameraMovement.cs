@@ -15,37 +15,47 @@ public class InGameCameraMovement : MonoBehaviour
     /// <summary>
     /// マウス横移動量の補正値
     /// </summary>
-    const float Mouse_Sensitivity_Horizonal = 100.0f;
+    const float Mouse_Sensitivity_Horizonal = 30.0f;
 
     /// <summary>
     /// マウス縦移動量の補正値
     /// </summary>
-    const float Mouse_Sensitivity_Vertical = 50.0f;
+    const float Mouse_Sensitivity_Vertical = 10.0f;
 
     /// <summary>
     /// プレイヤーとの距離
     /// </summary>
-    const float Camera_Distance = 10.0f;
+    const float Camera_Distance = 3.0f;
 
     /// <summary>
     /// カメラ追従速度
     /// </summary>
-    const float Camera_Following_Speed = 3.0f;
+    const float Camera_Following_Speed = 1.5f;
+
+    /// <summary>
+    /// カメラが追跡をやめる半径
+    /// </summary>
+    const float Camera_Stop_Range = 0.5f;
 
     /// <summary>
     /// カメラ向き上限
     /// </summary>
-    const float Camera_Forward_Maximum = -0.1f;
+    const float Camera_Forward_Maximum = -0.2f;
 
     /// <summary>
     /// カメラ向き下限
     /// </summary>
-    const float Camera_Forward_Minimum = -0.9f;
+    const float Camera_Forward_Minimum = -0.7f;
 
     /// <summary>
     /// 生成されたInputActionのインスタンスを保持する
     /// </summary>
     InputAction mouseMoveAction;
+
+    /// <summary>
+    /// 生成されたInputSystem_Actionsのインスタンスを保持する
+    /// </summary>
+    InputSystem_Actions inputActions;
 
     void Start()
     {
@@ -53,11 +63,17 @@ public class InGameCameraMovement : MonoBehaviour
         transform.position = PlayerTransform.position + Vector3.back;
 
         // InputActionクラスを読み込む
-        var inputActions = new InputSystem_Actions();
-        mouseMoveAction = inputActions.Player.MouseMovement; // PlayerアクションマップとMouseMovementアクションを参照
+        inputActions = new InputSystem_Actions();
+        mouseMoveAction = inputActions.Player.MouseMovement;
 
         // 入力アクションの開始を登録
         mouseMoveAction.Enable();
+    }
+
+    void OnDestroy()
+    {
+        //インプットシステムの停止
+        inputActions.Disable();
     }
 
     void Update()
@@ -101,9 +117,9 @@ public class InGameCameraMovement : MonoBehaviour
         var cameraToPlayer = PlayerTransform.position - transform.position;
         var distance = cameraToPlayer.magnitude;
 
-        if (Camera_Distance < distance) {
+        if (Camera_Distance < distance - Camera_Stop_Range) {
             transform.position += cameraToPlayer.normalized * Time.deltaTime * Camera_Following_Speed;
-        } else if (distance < Camera_Distance) {
+        } else if (distance + Camera_Stop_Range < Camera_Distance) {
             transform.position -= cameraToPlayer.normalized * Time.deltaTime * Camera_Following_Speed;
         }
     }
