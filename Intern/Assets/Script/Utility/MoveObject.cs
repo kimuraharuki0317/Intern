@@ -62,11 +62,7 @@ public class MoveObject : MonoBehaviour
     void Update()
     {
         //目的地を定める
-        var targetposiyion = returnPosition;
-        // 折り返し中か
-        if (returning){
-            targetposiyion = initPosition;
-        }
+        var targetPosition = returning ? returnPosition : initPosition;
 
         // 目標地点との距離を求める
         var distance = Vector3.Magnitude(returnPosition - transform.position);
@@ -76,7 +72,7 @@ public class MoveObject : MonoBehaviour
         }
 
         // 移動方向を求める
-        moveVector = Vector3.Normalize(targetposiyion - transform.position);
+        moveVector = Vector3.Normalize(targetPosition - transform.position);
 
         // 目標地点外か
         if (Return_Point_Range < distance) {
