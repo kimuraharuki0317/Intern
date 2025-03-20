@@ -13,6 +13,12 @@ public class ButtonDownChangeScene : MonoBehaviour
     [SerializeField]
     string SceneName;
 
+    /// <summary>
+    /// ChangeSceneコンポーネント
+    /// </summary>
+    [SerializeField]
+    ChangeScene ChangeSceneComponent;
+
     void Start()
     {
         // カーソル非表示状態になっていたら表示させる
@@ -24,7 +30,7 @@ public class ButtonDownChangeScene : MonoBehaviour
     /// </summary>
     public void ChangeScene()
     {
-        SceneManager.LoadScene(SceneName);
+        ChangeSceneComponent.Change(SceneName);
     }
 
     /// <summary>

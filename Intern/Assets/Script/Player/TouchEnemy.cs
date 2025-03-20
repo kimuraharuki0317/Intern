@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 敵に触れたらゲームオーバーにする
@@ -46,6 +45,12 @@ public class TouchEnemy : MonoBehaviour
     Rigidbody Rb;
 
     /// <summary>
+    /// ChangeSceneコンポーネント
+    /// </summary>
+    [SerializeField]
+    ChangeScene ChangeSceneComponent;
+
+    /// <summary>
     /// Enemyのタグを持つコライダーが入ってきたらゲームオーバー画面に遷移する
     /// </summary>
     void OnCollisionEnter(Collision other)
@@ -69,6 +74,6 @@ public class TouchEnemy : MonoBehaviour
     IEnumerator ChangeScene()
     {
         yield return new WaitForSeconds(Scene_Trandition_Delay);
-        SceneManager.LoadScene(Game_Over_Scene_Name);
+        ChangeSceneComponent.Change(Game_Over_Scene_Name);
     }
 }
