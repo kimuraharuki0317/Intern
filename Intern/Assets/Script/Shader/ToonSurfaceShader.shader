@@ -12,6 +12,7 @@ Shader "Unlit/ToonSurfaceShader"
         _Brightness_1 ("完全に影になっている箇所の明るさ", Range(0.0, 1.0)) = 0.3
         _Brightness_2 ("少し影になっている箇所の明るさ", Range(0.0, 1.0)) = 0.6
         _Brightness_3 ("光が当たっている場所の明るさ", Range(0.0, 1.0)) = 1.0
+        _OutLineBrightness ("輪郭線の明るさ", Range(0.0, 1.0)) = 0.2
     }
     SubShader
     {
@@ -41,6 +42,7 @@ Shader "Unlit/ToonSurfaceShader"
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
                 float3 normal : NORMAL;
+                float3 viewDir : TEXCOORD1;
             };
 
             sampler2D _MainTex;
@@ -51,6 +53,7 @@ Shader "Unlit/ToonSurfaceShader"
             float _Brightness_1;
             float _Brightness_2;
             float _Brightness_3;
+            float _OutLineBrightness;
 
             v2f vert (appdata v)
             {
@@ -59,6 +62,8 @@ Shader "Unlit/ToonSurfaceShader"
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 UNITY_TRANSFER_FOG(o,o.vertex);
+                float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+                o.viewDir = normalize(_WorldSpaceCameraPos - worldPos);
                 return o;
             }
 
@@ -79,6 +84,11 @@ Shader "Unlit/ToonSurfaceShader"
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 col *= nl * _MainColor;
+
+                //カメラと面の内積を用い、疑似的に輪郭線を表示する
+                float intensity = dot(i.viewDir, i.normal);
+                col *= intensity + _OutLineBrightness;
+
                 return col;
             }
             ENDCG
