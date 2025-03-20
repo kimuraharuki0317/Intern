@@ -1,5 +1,5 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// オブジェクトに2点を往復させる
@@ -25,9 +25,26 @@ public class MoveObject : MonoBehaviour
     float InitRatio;
 
     /// <summary>
+    /// 折り返し時に回転するか
+    /// </summary>
+    [SerializeField]
+    bool ReturnRotation;
+
+    /// <summary>
+    /// 折り返し時の停止時間
+    /// </summary>
+    [SerializeField]
+    float StopTime;
+
+    /// <summary>
     /// 折り返し中か
     /// </summary>
     bool returning;
+
+    /// <summary>
+    /// 折り返し処理が実行中かどうか
+    /// </summary>
+    bool waiting;
 
     /// <summary>
     /// 初期座標
@@ -67,13 +84,6 @@ public class MoveObject : MonoBehaviour
         // 目標地点との距離を求める
         var distance = returning ? Vector3.Magnitude(initPosition - transform.position) : Vector3.Magnitude(returnPosition - transform.position);
 
-        //// 目標地点との距離を求める
-        //var distance = Vector3.Magnitude(returnPosition - transform.position);
-        //// 折り返し中か
-        //if (returning) {
-        //    distance = Vector3.Magnitude(initPosition - transform.position);
-        //}
-
         // 移動方向を求める
         moveVector = Vector3.Normalize(targetPosition - transform.position);
 
@@ -81,12 +91,28 @@ public class MoveObject : MonoBehaviour
         if (Return_Point_Range < distance) {
             // 移動させる
             transform.position += moveVector * Time.deltaTime * MoveSpeed;
-        } else {
-            // 往復を切り替える
-            returning = !returning;
+            waiting = false;
+        } else if(!waiting) {
+            waiting = true;
+            StartCoroutine(DelayReturn());
+        }
+    }
+
+    /// <summary>
+    /// 一定時間後に折り返しを行う処理
+    /// </summary>
+    IEnumerator DelayReturn()
+    {
+        yield return new WaitForSeconds(StopTime);
+        // 往復を切り替える
+        returning = !returning;
+
+        if (ReturnRotation){
             //回転させる
             transform.Rotate(0, 180, 0);
         }
+
+        waiting = false;
     }
 
     /// <summary>
