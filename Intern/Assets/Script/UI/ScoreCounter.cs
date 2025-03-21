@@ -26,7 +26,7 @@ public class ScoreCounter : MonoBehaviour
     /// </summary>
     /// <param name="score">何点追加するか</param>
     public static void AddScore(int score)
-        =>gameScore += score;
+        => gameScore += score;
 
     /// <summary>
     /// 敵を倒した分のスコアを追加する
@@ -38,9 +38,7 @@ public class ScoreCounter : MonoBehaviour
     /// スコアを取得する
     /// </summary>
     /// <returns>現地点でのスコア(int)</returns>
-
     public static int GetScore()
-    {
-        return gameScore;
-    }
+        => gameScore;
+    
 }

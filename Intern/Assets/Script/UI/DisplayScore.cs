@@ -16,5 +16,5 @@ public class DisplayScore : MonoBehaviour
     /// スコアを取得、表示する
     /// </summary>
     void Update()
-        =>ScoreText.text = ScoreCounter.GetScore().ToString();
+        => ScoreText.text = ScoreCounter.GetScore().ToString();
 }

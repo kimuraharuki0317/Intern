@@ -62,14 +62,12 @@ public class TimeCounter : MonoBehaviour
     /// カウントを停止する
     /// </summary>
     public void StopCount()
-        =>stopCount = true;
+        => stopCount = true;
 
     /// <summary>
     /// 残り時間を取得する
     /// </summary>
     /// <returns>現地点での残り時間(int)</returns>
     public int GetRemainingTime()
-    {
-        return (int)remainingTime;
-    }
+        => (int)remainingTime;
 }

@@ -58,9 +58,9 @@ public class CheckGoal : MonoBehaviour
             ChangeSceneComponent.Change(Result_Scene_Name, Scene_Trandition_Delay);
             Instantiate(ClearEffect);
 
-            // 残り時間をスコアに加算、カウントダウン停止
-            ScoreCounter.AddScore(TimeCounterComponent.GetRemainingTime());
+            // カウントダウン停止、残り時間をスコアに加算
             TimeCounterComponent.StopCount();
+            ScoreCounter.AddScore(TimeCounterComponent.GetRemainingTime());
         }
     }
 }
