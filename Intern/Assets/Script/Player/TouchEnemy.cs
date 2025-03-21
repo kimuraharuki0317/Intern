@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// 敵に触れたらゲームオーバーにする
@@ -27,6 +26,12 @@ public class TouchEnemy : MonoBehaviour
     const float Enemy_Push_Power = 5.0f;
 
     /// <summary>
+    /// 衝突エフェクト生成位置をどれだけずらすか
+    /// </summary>
+    [SerializeField]
+    Vector3 EffectPosition;
+
+    /// <summary>
     /// PlayerMovementコンポーネント
     /// </summary>
     [SerializeField]
@@ -45,6 +50,12 @@ public class TouchEnemy : MonoBehaviour
     Rigidbody Rb;
 
     /// <summary>
+    /// 衝突エフェクト
+    /// </summary>
+    [SerializeField]
+    GameObject HitEffect;
+
+    /// <summary>
     /// ChangeSceneコンポーネント
     /// </summary>
     [SerializeField]
@@ -56,24 +67,18 @@ public class TouchEnemy : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == Enemy_Tag) {
-            //敵とプレイヤーの動きを止める
+            // 敵とプレイヤーの動きを止める
             Movement.enabled = false;
             Tread.enabled = false;
             other.gameObject.GetComponent<MoveObject>().enabled = false;
 
-            //プレイヤーを吹き飛ばす
+            // プレイヤーを吹き飛ばす
             Rb.AddForce(Vector3.Normalize(transform.position - other.gameObject.transform.position) * Enemy_Push_Power, ForceMode.Impulse);
 
-            StartCoroutine(ChangeScene());
-        }
-    }
+            // 敵とプレイヤーの中間にエフェクトを生成
+            Instantiate(HitEffect, EffectPosition　+ (transform.position + other.gameObject.transform.position) / 2.0f, Quaternion.identity);
 
-    /// <summary>
-    /// 呼び出されてからScene_Trandition_Delay秒後にゲームオーバー画面に遷移する
-    /// </summary>
-    IEnumerator ChangeScene()
-    {
-        yield return new WaitForSeconds(Scene_Trandition_Delay);
-        ChangeSceneComponent.Change(Game_Over_Scene_Name);
+            ChangeSceneComponent.Change(Game_Over_Scene_Name, Scene_Trandition_Delay);
+        }
     }
 }
