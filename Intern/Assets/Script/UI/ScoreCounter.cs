@@ -40,5 +40,4 @@ public class ScoreCounter : MonoBehaviour
     /// <returns>現地点でのスコア(int)</returns>
     public static int GetScore()
         => gameScore;
-    
 }
