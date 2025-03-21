@@ -40,6 +40,12 @@ public class CheckGoal : MonoBehaviour
     ChangeScene ChangeSceneComponent;
 
     /// <summary>
+    /// TimeCounterコンポーネント
+    /// </summary>
+    [SerializeField]
+    TimeCounter TimeCounterComponent;
+
+    /// <summary>
     /// プレイヤーのタグを持つコライダーが入ってきたらクリア画面に遷移する
     /// </summary>
     void OnCollisionEnter(Collision other)
@@ -51,6 +57,10 @@ public class CheckGoal : MonoBehaviour
             // 遅延を掛けてシーンを切り替え、演出オブジェクトを生成する
             ChangeSceneComponent.Change(Result_Scene_Name, Scene_Trandition_Delay);
             Instantiate(ClearEffect);
+
+            // 残り時間をスコアに加算、カウントダウン停止
+            ScoreCounter.AddScore(TimeCounterComponent.GetRemainingTime());
+            TimeCounterComponent.StopCount();
         }
     }
 }
