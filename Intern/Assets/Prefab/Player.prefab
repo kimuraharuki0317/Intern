@@ -454,9 +454,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7da0422d8ea63741b380c3837629335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EffectPosition: {x: 0, y: 0.5, z: 0}
   Movement: {fileID: 1683627985444522441}
   Tread: {fileID: 550072862071672473}
   Rb: {fileID: 6028239835624443950}
+  HitEffect: {fileID: 2955623459812423943, guid: f5507a8c6a22c404ab324980c4e8a11b, type: 3}
+  ChangeSceneComponent: {fileID: 0}
 --- !u!114 &550072862071672473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,3 +473,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerRigidbody: {fileID: 6028239835624443950}
+  TreadEffect: {fileID: 8443315704496310910, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
+  EffectPosition: {x: 0, y: 0.5, z: 0}

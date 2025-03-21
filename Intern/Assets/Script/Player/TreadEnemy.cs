@@ -4,11 +4,24 @@
 /// 敵を踏みつける処理
 /// </summary>
 public class TreadEnemy : MonoBehaviour
-{   /// <summary>
+{
+    /// <summary>
     /// プレイヤーののRigidbody
     /// </summary>
     [SerializeField]
     Rigidbody PlayerRigidbody;
+
+    /// <summary>
+    /// 敵を踏んだ時のエフェクト
+    /// </summary>
+    [SerializeField]
+    GameObject TreadEffect;
+
+    /// <summary>
+    /// 踏みつけエフェクト生成位置をどれだけずらすか
+    /// </summary>
+    [SerializeField]
+    Vector3 EffectPosition;
 
     /// <summary>
     /// 敵オブジェクトのタグ
@@ -26,6 +39,8 @@ public class TreadEnemy : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == Enemy_Tag) {
+            // 敵とプレイヤーの中間にエフェクトを生成
+            Instantiate(TreadEffect, EffectPosition + (transform.position + other.gameObject.transform.position) / 2.0f, Quaternion.identity);
             Destroy(other.gameObject);
             PlayerRigidbody.AddForce(Tread_Power * Vector3.up, ForceMode.Impulse);
         }
