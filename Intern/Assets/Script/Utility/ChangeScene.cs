@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 /// <summary>
 /// フェードイン、フェードアウトを伴う画面遷移をする
@@ -44,7 +45,7 @@ public class ChangeScene : MonoBehaviour
             //フェードアウトさせ、終わり次第画面を切り替える
             FadeImage.color = new Color(0, 0, 0, alpha + Time.deltaTime * FadeSpeed);
 
-            if (1.0f < alpha){
+            if (1.0f < alpha) {
                 SceneManager.LoadScene(nextSceneName);
             }
         } else {
@@ -59,15 +60,31 @@ public class ChangeScene : MonoBehaviour
     }
 
     /// <summary>
-    /// シーンを切り替える
+    /// シーンを切り替える関数
     /// </summary>
-    /// <param name="scenename">次シーンの名前</param>
-    public void Change(string scenename)
+    /// <param name="sceneName">次シーンの名前</param>
+    public void Change(string sceneName)
     {
-        // 次のシーン名、パネルの色をリセット
-        nextSceneName = scenename;
-
-        //　ヒエラルキーで一番下に移動し、前面に表示される
+        nextSceneName = sceneName;
         transform.SetAsLastSibling();
+    }
+
+    /// <summary>
+    /// 外部からコルーチンを呼び出せるようにするための関数
+    /// </summary>
+    /// <param name="sceneName">次シーンの名前</param>
+    /// <param name="sec">遅延秒数</param>
+    public void Change(string sceneName, float sec)
+        => StartCoroutine(DelayChangeScene(sceneName, sec));
+
+    /// <summary>
+    /// 実際に遅延をかけてシーンを切り替える処理を行う
+    /// </summary>
+    /// <param name="sceneName">次シーンの名前</param>
+    /// <param name="sec">遅延秒数</param>
+    IEnumerator DelayChangeScene(string sceneName, float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        Change(sceneName);
     }
 }

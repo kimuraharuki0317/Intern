@@ -17,6 +17,23 @@ public class CheckGoal : MonoBehaviour
     const string Result_Scene_Name = "Result";
 
     /// <summary>
+    /// 画面切り替えまでの遅延秒数
+    /// </summary>
+    const float Scene_Trandition_Delay = 3.0f;
+
+    /// <summary>
+    /// クリア演出用オブジェクト
+    /// </summary>
+    [SerializeField]
+    GameObject ClearEffect;
+
+    /// <summary>
+    /// PlayerMovementコンポーネント
+    /// </summary>
+    [SerializeField]
+    PlayerMovement Movement;
+
+    /// <summary>
     /// ChangeSceneコンポーネント
     /// </summary>
     [SerializeField]
@@ -28,7 +45,12 @@ public class CheckGoal : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == Player_Tag) {
-            ChangeSceneComponent.Change(Result_Scene_Name);
+            // プレイヤーの動きを止める
+            Movement.enabled = false;
+
+            // 遅延を掛けてシーンを切り替え、演出オブジェクトを生成する
+            ChangeSceneComponent.Change(Result_Scene_Name, Scene_Trandition_Delay);
+            Instantiate(ClearEffect);
         }
     }
 }
