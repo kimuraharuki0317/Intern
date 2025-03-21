@@ -10,17 +10,17 @@ public class RankingData : MonoBehaviour
     /// <summary>
     /// スコアのキー
     /// </summary>
-    const string ScoreKey = "HighScore";
+    const string Score_Key = "HighScore";
 
     /// <summary>
     /// 名前のキー
     /// </summary>
-    const string NameKey = "HighScoreName";
+    const string Name_Key = "HighScoreName";
 
     /// <summary>
     /// ランキングの最大数
     /// </summary>
-    const int MaxRankings = 5;
+    const int Max_Rankings = 5;
 
     /// <summary>
     /// 最新データをもとに、ランキング最大数分のスコアをセーブする
@@ -32,12 +32,12 @@ public class RankingData : MonoBehaviour
         var newScores = LoadScores();
         newScores.Add((playerName, newScore));
         // 高スコア順に並べ替え
-        newScores = newScores.OrderByDescending(s => s.score).Take(MaxRankings).ToList();
+        newScores = newScores.OrderByDescending(s => s.score).Take(Max_Rankings).ToList();
 
         // PlayerPrefsに保存
         for (var i = 0; i < newScores.Count; i++) {
-            PlayerPrefs.SetString(NameKey + i, newScores[i].name);
-            PlayerPrefs.SetInt(ScoreKey + i, newScores[i].score);
+            PlayerPrefs.SetString(Name_Key + i, newScores[i].name);
+            PlayerPrefs.SetInt(Score_Key + i, newScores[i].score);
         }
         PlayerPrefs.Save();
     }
@@ -50,10 +50,10 @@ public class RankingData : MonoBehaviour
     {
         var scores = new List<(string, int)>();
 
-        for (var i = 0; i < MaxRankings; i++) {
+        for (var i = 0; i < Max_Rankings; i++) {
             // リストに追加
-            var name = PlayerPrefs.GetString(NameKey + i, string.Empty);
-            var score = PlayerPrefs.GetInt(ScoreKey + i, 0);
+            var name = PlayerPrefs.GetString(Name_Key + i, string.Empty);
+            var score = PlayerPrefs.GetInt(Score_Key + i, 0);
             scores.Add((name, score));
         }
         return scores;
