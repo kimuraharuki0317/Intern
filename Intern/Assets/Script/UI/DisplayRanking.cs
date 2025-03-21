@@ -29,6 +29,7 @@ public class DisplayRanking : MonoBehaviour
     {
         var scores = ScoreDataComponent.LoadScores();
         RankingText.text = "Ranking\n";
+
         for (var i = 0; i < scores.Count; i++) {
             RankingText.text += $"{i + 1} : {scores[i].name} - {scores[i].score}\n";
         }

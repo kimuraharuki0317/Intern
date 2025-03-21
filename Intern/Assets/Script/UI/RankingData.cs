@@ -39,6 +39,7 @@ public class RankingData : MonoBehaviour
             PlayerPrefs.SetString(Name_Key + i, newScores[i].name);
             PlayerPrefs.SetInt(Score_Key + i, newScores[i].score);
         }
+
         PlayerPrefs.Save();
     }
 
@@ -56,6 +57,7 @@ public class RankingData : MonoBehaviour
             var score = PlayerPrefs.GetInt(Score_Key + i, 0);
             scores.Add((name, score));
         }
+
         return scores;
     }
 }
