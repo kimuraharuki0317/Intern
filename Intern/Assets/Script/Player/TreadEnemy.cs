@@ -43,6 +43,8 @@ public class TreadEnemy : MonoBehaviour
             Instantiate(TreadEffect, EffectPosition + (transform.position + other.gameObject.transform.position) / 2.0f, Quaternion.identity);
             Destroy(other.gameObject);
             PlayerRigidbody.AddForce(Tread_Power * Vector3.up, ForceMode.Impulse);
+            // 敵を倒した分のスコア加算
+            ScoreCounter.AddEnemyScore();
         }
     }
 }

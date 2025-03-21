@@ -15,9 +15,7 @@ public class GameStartUI : MonoBehaviour
     /// 敵オブジェクトのタグ
     /// </summary>
     void Start()
-    {
-        StartCoroutine(DestroyObject());
-    }
+        => StartCoroutine(DestroyObject());
 
     /// <summary>
     // 呼び出されてからScene_Trandition_Delay秒後に消す
