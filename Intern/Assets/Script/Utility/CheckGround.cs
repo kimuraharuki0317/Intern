@@ -22,6 +22,11 @@ public class CheckGround : MonoBehaviour
     const string Ground_Tag = "Ground";
 
     /// <summary>
+    /// 敵オブジェクトのタグ
+    /// </summary>
+    const string Enemy_Tag = "Enemy";
+
+    /// <summary>
     /// 地面に接触しているかを返す
     /// </summary>
     /// <returns>地面に接触しているか(bool)</returns>
@@ -33,7 +38,17 @@ public class CheckGround : MonoBehaviour
     /// </summary>
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == Ground_Tag) {
+        if (other.gameObject.tag == Ground_Tag || other.gameObject.tag == Enemy_Tag) {
+            hitGround = true;
+        }
+    }
+
+    /// <summary>
+    /// 地面のタグを持つコライダーに接触していたら hitGround を true にする
+    /// </summary>
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == Ground_Tag || other.gameObject.tag == Enemy_Tag){
             hitGround = true;
         }
     }
@@ -43,7 +58,7 @@ public class CheckGround : MonoBehaviour
     /// </summary>
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == Ground_Tag) {
+        if (other.gameObject.tag == Ground_Tag || other.gameObject.tag == Enemy_Tag) {
             hitGround = false;
         }
     }

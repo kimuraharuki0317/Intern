@@ -9,12 +9,12 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// プレイヤーの移動速度
     /// </summary>
-    const float Move_Speed = 3.0f;
+    const float Move_Speed = 1.5f;
 
     /// <summary>
     /// プレイヤーのジャンプ力
     /// </summary>
-    const float Jump_Power = 6.0f;
+    const float Jump_Power = 5.0f;
 
     /// <summary>
     /// 接地確認コンポーネント

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 敵に触れたらゲームオーバーにする
@@ -23,10 +22,33 @@ public class TouchEnemy : MonoBehaviour
     const float Scene_Trandition_Delay = 2.0f;
 
     /// <summary>
+    /// 敵に当たった時のふっとび量
+    /// </summary>
+    const float Enemy_Push_Power = 5.0f;
+
+    /// <summary>
     /// PlayerMovementコンポーネント
     /// </summary>
     [SerializeField]
     PlayerMovement Movement;
+
+    /// <summary>
+    /// TreadEnemyコンポーネント
+    /// </summary>
+    [SerializeField]
+    TreadEnemy Tread;
+
+    /// <summary>
+    /// RigidBodyコンポーネント
+    /// </summary>
+    [SerializeField]
+    Rigidbody Rb;
+
+    /// <summary>
+    /// ChangeSceneコンポーネント
+    /// </summary>
+    [SerializeField]
+    ChangeScene ChangeSceneComponent;
 
     /// <summary>
     /// Enemyのタグを持つコライダーが入ってきたらゲームオーバー画面に遷移する
@@ -34,17 +56,24 @@ public class TouchEnemy : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == Enemy_Tag) {
+            //敵とプレイヤーの動きを止める
+            Movement.enabled = false;
+            Tread.enabled = false;
+            other.gameObject.GetComponent<MoveObject>().enabled = false;
+
+            //プレイヤーを吹き飛ばす
+            Rb.AddForce(Vector3.Normalize(transform.position - other.gameObject.transform.position) * Enemy_Push_Power, ForceMode.Impulse);
+
             StartCoroutine(ChangeScene());
         }
     }
 
     /// <summary>
-    /// プレイヤーの動きを止め、呼び出されてからScene_Trandition_Delay秒後にゲームオーバー画面に遷移する
+    /// 呼び出されてからScene_Trandition_Delay秒後にゲームオーバー画面に遷移する
     /// </summary>
     IEnumerator ChangeScene()
     {
-        Movement.enabled = false;
         yield return new WaitForSeconds(Scene_Trandition_Delay);
-        SceneManager.LoadScene(Game_Over_Scene_Name);
+        ChangeSceneComponent.Change(Game_Over_Scene_Name);
     }
 }

@@ -17,12 +17,18 @@ public class CheckGoal : MonoBehaviour
     const string Result_Scene_Name = "Result";
 
     /// <summary>
+    /// ChangeSceneコンポーネント
+    /// </summary>
+    [SerializeField]
+    ChangeScene ChangeSceneComponent;
+
+    /// <summary>
     /// プレイヤーのタグを持つコライダーが入ってきたらクリア画面に遷移する
     /// </summary>
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == Player_Tag) {
-            SceneManager.LoadScene(Result_Scene_Name);
+            ChangeSceneComponent.Change(Result_Scene_Name);
         }
     }
 }
