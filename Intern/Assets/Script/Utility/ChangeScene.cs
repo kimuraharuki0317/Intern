@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 /// <summary>
 /// フェードイン、フェードアウトを伴う画面遷移をする
@@ -64,10 +65,32 @@ public class ChangeScene : MonoBehaviour
     /// <param name="scenename">次シーンの名前</param>
     public void Change(string scenename)
     {
-        // 次のシーン名、パネルの色をリセット
+        // 次のシーン名をセット
         nextSceneName = scenename;
 
         //　ヒエラルキーで一番下に移動し、前面に表示される
         transform.SetAsLastSibling();
+    }
+
+    /// <summary>
+    /// 遅延をかけてシーンを切り替える
+    /// </summary>
+    /// <param name="scenename">次シーンの名前</param>
+    /// <param name="sec">遅延秒数</param>
+    public void Change(string scenename, float sec)
+    {
+        // コルーチンの開始
+        StartCoroutine(DelayChangeScene(scenename, sec));
+    }
+
+    /// <summary>
+    /// コルーチン内部
+    /// </summary>
+    /// <param name="scenename">次シーンの名前</param>
+    /// <param name="sec">遅延秒数</param>
+    IEnumerator DelayChangeScene(string scenename, float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        Change(scenename);
     }
 }
