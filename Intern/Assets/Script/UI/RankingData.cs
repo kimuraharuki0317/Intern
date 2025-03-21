@@ -52,7 +52,7 @@ public class RankingData : MonoBehaviour
 
         for (var i = 0; i < MaxRankings; i++) {
             // リストに追加
-            var name = PlayerPrefs.GetString(NameKey + i, "");
+            var name = PlayerPrefs.GetString(NameKey + i, string.Empty);
             var score = PlayerPrefs.GetInt(ScoreKey + i, 0);
             scores.Add((name, score));
         }

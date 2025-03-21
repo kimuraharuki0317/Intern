@@ -33,6 +33,11 @@ public class InputRanking : MonoBehaviour
     DisplayRanking DisplayRankingComponent;
 
     /// <summary>
+    /// 空白時の名前
+    /// </summary>
+    const string Empty_Name = "Unknown";
+
+    /// <summary>
     /// ランキングが更新されていたら入力UIを呼び出す
     /// </summary>
     void Start()
@@ -57,9 +62,9 @@ public class InputRanking : MonoBehaviour
     public void EnterButton()
     {
         var playerName = NameInputField.text.Trim();
-        // 空欄なら "Unknown"
+
         if (string.IsNullOrEmpty(playerName)) {
-            playerName = "Unknown";
+            playerName = Empty_Name;
         }
         RankingDataConponent.SaveScore(playerName, ScoreCounter.GetScore());
 
