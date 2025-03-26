@@ -49,14 +49,11 @@ public class InputRanking : MonoBehaviour
         var score = RankingDataConponent.LoadScores();
 
         for (var i = 0; i < score.Count; i++) {
-
             // ランキングが更新されていたら入力用のUIを表示する
             if (score[i].score < ScoreCounter.GetScore()) {
                 PopupPanel.SetActive(true);
             }
-
         }
-
     }
 
     /// <summary>
