@@ -15,37 +15,44 @@ public class InGameCameraMovement : MonoBehaviour
     /// <summary>
     /// マウス横移動量の補正値
     /// </summary>
-    const float Mouse_Sensitivity_Horizonal = 30.0f;
+    [SerializeField]
+    float Mouse_Sensitivity_Horizonal = 30.0f;
 
     /// <summary>
     /// マウス縦移動量の補正値
     /// </summary>
-    const float Mouse_Sensitivity_Vertical = 10.0f;
+    [SerializeField]
+    float Mouse_Sensitivity_Vertical = 10.0f;
 
     /// <summary>
     /// プレイヤーとの距離
     /// </summary>
-    const float Camera_Distance = 3.0f;
+    [SerializeField]
+    float Camera_Distance = 3.0f;
 
     /// <summary>
     /// カメラ追従速度
     /// </summary>
-    const float Camera_Following_Speed = 1.5f;
+    [SerializeField]
+    float Camera_Following_Speed = 2.5f;
 
     /// <summary>
     /// カメラが追跡をやめる半径
     /// </summary>
-    const float Camera_Stop_Range = 0.5f;
+    [SerializeField] 
+    float Camera_Stop_Range = 0.5f;
 
     /// <summary>
     /// カメラ向き上限
     /// </summary>
-    const float Camera_Forward_Maximum = -0.2f;
+    [SerializeField] 
+    float Camera_Forward_Maximum = -0.2f;
 
     /// <summary>
     /// カメラ向き下限
     /// </summary>
-    const float Camera_Forward_Minimum = -0.7f;
+    [SerializeField] 
+    float Camera_Forward_Minimum = -0.7f;
 
     /// <summary>
     /// 生成されたInputActionのインスタンスを保持する
@@ -59,7 +66,9 @@ public class InGameCameraMovement : MonoBehaviour
 
     void Start()
     {
+        // カーソル固定
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         transform.position = PlayerTransform.position + Vector3.back;
 
         // InputActionクラスを読み込む
