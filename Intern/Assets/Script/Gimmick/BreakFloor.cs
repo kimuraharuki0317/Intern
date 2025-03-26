@@ -78,7 +78,7 @@ public class BreakFloor : MonoBehaviour
     void Start()
     {
         // マテリアルをコピーし、割り当てる
-        floorMaterial=new Material(FloorMaterial);
+        floorMaterial = new Material(FloorMaterial);
         FloorRenderer.material = floorMaterial;
     }
 
@@ -89,7 +89,7 @@ public class BreakFloor : MonoBehaviour
             breakCount += Time.deltaTime;
         } else {
             breakCount -= Time.deltaTime;
-            breakCount=Mathf.Max(0, breakCount);
+            breakCount = Mathf.Max(0, breakCount);
         }
 
         // 床をなくす
@@ -100,7 +100,7 @@ public class BreakFloor : MonoBehaviour
 
         // マテリアルの値を変える
         floorMaterial.SetFloat("_BreakCount", breakCount / BreakLimit);
-        var floorAlpha= BreakFlag ? BreakAlpha : DefaultAlpha;
+        var floorAlpha = BreakFlag ? BreakAlpha : DefaultAlpha;
         floorMaterial.SetFloat("_Alpha", floorAlpha);
     }
 

@@ -10,19 +10,19 @@ public class PlayerMovement : MonoBehaviour
     /// プレイヤーの移動速度
     /// </summary>
     [SerializeField]
-    float Move_Speed = 1.5f;
+    float MoveSpeed = 1.5f;
 
     /// <summary>
     /// ダッシュ時の速度倍率
     /// </summary>
     [SerializeField]
-    float Dash_Speed = 1.5f;
+    float DashSpeed = 1.5f;
 
     /// <summary>
     /// プレイヤーのジャンプ力
     /// </summary>
     [SerializeField]
-    float Jump_Power = 5.0f;
+    float JumpPower = 5.0f;
 
     /// <summary>
     /// 接地確認コンポーネント
