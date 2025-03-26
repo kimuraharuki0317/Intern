@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             transform.forward = moveVector;
 
             // ダッシュ計算
-            var speed = Input.GetKey(KeyCode.LeftShift) ? Dash_Speed * Move_Speed : Move_Speed;
+            var speed = Input.GetKey(KeyCode.LeftShift) ? DashSpeed * MoveSpeed : MoveSpeed;
 
             // 実際に移動させる
             transform.position += transform.forward * speed * Time.deltaTime;
@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
         // スペースキー押下かつ接地していたらジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && CheckGround.GetHitGround()) {
-            Rb.AddForce(Jump_Power * Vector3.up, ForceMode.Impulse);
+            Rb.AddForce(JumpPower * Vector3.up, ForceMode.Impulse);
         }
     }
 }
