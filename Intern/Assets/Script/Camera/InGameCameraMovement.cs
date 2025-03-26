@@ -15,37 +15,44 @@ public class InGameCameraMovement : MonoBehaviour
     /// <summary>
     /// マウス横移動量の補正値
     /// </summary>
-    const float Mouse_Sensitivity_Horizonal = 30.0f;
+    [SerializeField]
+    float MouseSensitivityHorizonal = 30.0f;
 
     /// <summary>
     /// マウス縦移動量の補正値
     /// </summary>
-    const float Mouse_Sensitivity_Vertical = 10.0f;
+    [SerializeField]
+    float MouseSensitivityVertical = 10.0f;
 
     /// <summary>
     /// プレイヤーとの距離
     /// </summary>
-    const float Camera_Distance = 3.0f;
+    [SerializeField]
+    float CameraDistance = 3.0f;
 
     /// <summary>
     /// カメラ追従速度
     /// </summary>
-    const float Camera_Following_Speed = 1.5f;
+    [SerializeField]
+    float CameraFollowingSpeed = 2.5f;
 
     /// <summary>
     /// カメラが追跡をやめる半径
     /// </summary>
-    const float Camera_Stop_Range = 0.5f;
+    [SerializeField] 
+    float CameraStopRange = 0.5f;
 
     /// <summary>
     /// カメラ向き上限
     /// </summary>
-    const float Camera_Forward_Maximum = -0.2f;
+    [SerializeField] 
+    float CameraForwardMaximum = -0.2f;
 
     /// <summary>
     /// カメラ向き下限
     /// </summary>
-    const float Camera_Forward_Minimum = -0.7f;
+    [SerializeField] 
+    float CameraForwardMinimum = -0.7f;
 
     /// <summary>
     /// 生成されたInputActionのインスタンスを保持する
@@ -59,7 +66,9 @@ public class InGameCameraMovement : MonoBehaviour
 
     void Start()
     {
+        // カーソル固定
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         transform.position = PlayerTransform.position + Vector3.back;
 
         // InputActionクラスを読み込む
@@ -97,15 +106,15 @@ public class InGameCameraMovement : MonoBehaviour
         var mouseDelta = mouseMoveAction.ReadValue<Vector2>();
 
         // カメラ横回転
-        transform.RotateAround(PlayerTransform.position, Vector3.up, mouseDelta.x * Time.deltaTime * Mouse_Sensitivity_Horizonal);
+        transform.RotateAround(PlayerTransform.position, Vector3.up, mouseDelta.x * Time.deltaTime * MouseSensitivityHorizonal);
 
         // カメラ縦回転
         // 下、上に行き過ぎないよう制限をかける
-        if (Camera_Forward_Minimum < transform.forward.y && transform.forward.y < Camera_Forward_Maximum) {
-            transform.RotateAround(PlayerTransform.position, Camera.main.transform.right, mouseDelta.y * Time.deltaTime * Mouse_Sensitivity_Vertical);
+        if (CameraForwardMinimum < transform.forward.y && transform.forward.y < CameraForwardMaximum) {
+            transform.RotateAround(PlayerTransform.position, Camera.main.transform.right, mouseDelta.y * Time.deltaTime * MouseSensitivityVertical);
         } else {
             //行き過ぎていたら中央に動かして範囲内に動かす
-            transform.position += new Vector3(0.0f, (transform.forward.y - (Camera_Forward_Minimum + Camera_Forward_Maximum) / 2.0f) * Time.deltaTime * Camera_Following_Speed, 0.0f);
+            transform.position += new Vector3(0.0f, (transform.forward.y - (CameraForwardMinimum + CameraForwardMaximum) / 2.0f) * Time.deltaTime * CameraFollowingSpeed, 0.0f);
         }
     }
 
@@ -117,10 +126,10 @@ public class InGameCameraMovement : MonoBehaviour
         var cameraToPlayer = PlayerTransform.position - transform.position;
         var distance = cameraToPlayer.magnitude;
 
-        if (Camera_Distance < distance - Camera_Stop_Range) {
-            transform.position += cameraToPlayer.normalized * Time.deltaTime * Camera_Following_Speed;
-        } else if (distance + Camera_Stop_Range < Camera_Distance) {
-            transform.position -= cameraToPlayer.normalized * Time.deltaTime * Camera_Following_Speed;
+        if (CameraDistance < distance - CameraStopRange) {
+            transform.position += cameraToPlayer.normalized * Time.deltaTime * CameraFollowingSpeed;
+        } else if (distance + CameraStopRange < CameraDistance) {
+            transform.position -= cameraToPlayer.normalized * Time.deltaTime * CameraFollowingSpeed;
         }
     }
 }

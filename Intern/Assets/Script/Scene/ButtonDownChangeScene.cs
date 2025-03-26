@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ボタン押下により、シーン遷移を行うクラス
@@ -23,6 +21,7 @@ public class ButtonDownChangeScene : MonoBehaviour
     {
         // カーソル非表示状態になっていたら表示させる
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     /// <summary>

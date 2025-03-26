@@ -6,9 +6,14 @@
 public class TouchEnemy : MonoBehaviour
 {
     /// <summary>
-    /// プレイヤーのタグ
+    /// 敵のタグ
     /// </summary>
     const string Enemy_Tag = "Enemy";
+
+    /// <summary>
+    /// ギミックのタグ
+    /// </summary>
+    const string Gimmick_Tag = "Gimmick";
 
     /// <summary>
     /// リザルトシーン名
@@ -66,11 +71,15 @@ public class TouchEnemy : MonoBehaviour
     /// </summary>
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == Enemy_Tag) {
+        if (other.gameObject.tag == Enemy_Tag || other.gameObject.tag == Gimmick_Tag) {
             // 敵とプレイヤーの動きを止める
             Movement.enabled = false;
             Tread.enabled = false;
-            other.gameObject.GetComponent<MoveObject>().enabled = false;
+
+            // 敵だったら動きを止める
+            if(other.gameObject.tag == Enemy_Tag) {
+                other.gameObject.GetComponent<MoveObject>().enabled = false;
+            }
 
             // プレイヤーを吹き飛ばす
             Rb.AddForce(Vector3.Normalize(transform.position - other.gameObject.transform.position) * Enemy_Push_Power, ForceMode.Impulse);

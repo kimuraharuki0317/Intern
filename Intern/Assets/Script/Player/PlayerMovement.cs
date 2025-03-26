@@ -9,12 +9,20 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// プレイヤーの移動速度
     /// </summary>
-    const float Move_Speed = 1.5f;
+    [SerializeField]
+    float MoveSpeed = 1.5f;
+
+    /// <summary>
+    /// ダッシュ時の速度倍率
+    /// </summary>
+    [SerializeField]
+    float DashSpeed = 1.5f;
 
     /// <summary>
     /// プレイヤーのジャンプ力
     /// </summary>
-    const float Jump_Power = 5.0f;
+    [SerializeField]
+    float JumpPower = 5.0f;
 
     /// <summary>
     /// 接地確認コンポーネント
@@ -64,13 +72,16 @@ public class PlayerMovement : MonoBehaviour
             // 移動方向に向ける
             transform.forward = moveVector;
 
+            // ダッシュ計算
+            var speed = Input.GetKey(KeyCode.LeftShift) ? DashSpeed * MoveSpeed : MoveSpeed;
+
             // 実際に移動させる
-            transform.position += transform.forward * Move_Speed * Time.deltaTime;
+            transform.position += transform.forward * speed * Time.deltaTime;
         }
 
         // スペースキー押下かつ接地していたらジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && CheckGround.GetHitGround()) {
-            Rb.AddForce(Jump_Power * Vector3.up, ForceMode.Impulse);
+            Rb.AddForce(JumpPower * Vector3.up, ForceMode.Impulse);
         }
     }
 }
