@@ -31,6 +31,12 @@ public class MoveObject : MonoBehaviour
     bool ReturnRotation;
 
     /// <summary>
+    /// オブジェクトを後ろ向きにするか
+    /// </summary>
+    [SerializeField]
+    bool ReverseRotation;
+
+    /// <summary>
     /// 折り返し時の停止時間
     /// </summary>
     [SerializeField]
@@ -96,6 +102,13 @@ public class MoveObject : MonoBehaviour
             waiting = true;
             StartCoroutine(DelayReturn());
         }
+
+        // 向きを合わせる
+        if (ReturnRotation) {
+            var forwardVector = ReverseRotation ? moveVector : - moveVector;
+            forwardVector.y = 0;
+            transform.forward = forwardVector;
+        }
     }
 
     /// <summary>
@@ -106,11 +119,6 @@ public class MoveObject : MonoBehaviour
         yield return new WaitForSeconds(StopTime);
         // 往復を切り替える
         returning = !returning;
-
-        if (ReturnRotation){
-            //回転させる
-            transform.Rotate(0, 180, 0);
-        }
 
         waiting = false;
     }
