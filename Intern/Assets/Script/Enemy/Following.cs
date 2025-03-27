@@ -41,7 +41,7 @@ public class Following : MonoBehaviour
     void Update()
     {
         // 見つかっていたら追跡を行う
-        if(find) {
+        if (find) {
             var moveVector = Vector3.Normalize(targetObject.transform.position - EnemyObject.transform.position);
             moveVector.y = 0;
             EnemyObject.transform.forward = -moveVector;
