@@ -194,4 +194,5 @@ MonoBehaviour:
   MoveSpeed: 3
   InitRatio: 0
   ReturnRotation: 1
+  ReverseRotation: 1
   StopTime: 1
