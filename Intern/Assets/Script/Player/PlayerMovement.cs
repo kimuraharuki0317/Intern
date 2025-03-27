@@ -25,6 +25,12 @@ public class PlayerMovement : MonoBehaviour
     float JumpPower = 5.0f;
 
     /// <summary>
+    /// トレイル
+    /// </summary>
+    [SerializeField]
+    TrailRenderer Trai;
+
+    /// <summary>
     /// 接地確認コンポーネント
     /// </summary>
     [SerializeField] 
@@ -73,7 +79,13 @@ public class PlayerMovement : MonoBehaviour
             transform.forward = moveVector;
 
             // ダッシュ計算
-            var speed = Input.GetKey(KeyCode.LeftShift) ? DashSpeed * MoveSpeed : MoveSpeed;
+            var speed = MoveSpeed;
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                speed *= MoveSpeed;
+                Trai.enabled = true;
+            } else {
+                Trai.enabled = false;
+            }
 
             // 実際に移動させる
             transform.position += transform.forward * speed * Time.deltaTime;

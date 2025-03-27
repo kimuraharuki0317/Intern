@@ -19,7 +19,7 @@ public class TimeCounter : MonoBehaviour
     /// <summary>
     /// 制限時間
     /// </summary>
-    public const int Time_Limit = 90;
+    public const int Time_Limit = 300;
 
     /// <summary>
     /// 残り時間

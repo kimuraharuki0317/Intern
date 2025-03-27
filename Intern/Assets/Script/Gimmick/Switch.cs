@@ -16,6 +16,24 @@ public class Switch : MonoBehaviour
     const string Enemy_Tag = "Enemy";
 
     /// <summary>
+    /// メッシュコライダー
+    /// </summary>
+    [SerializeField]
+    MeshRenderer Mesh;
+
+    /// <summary>
+    /// スイッチオン時のマテリアル
+    /// </summary>
+    [SerializeField]
+    Material OnMaterial;
+
+    /// <summary>
+    /// スイッチオフ時のマテリアル
+    /// </summary>
+    [SerializeField]
+    Material OffMaterial;
+
+    /// <summary>
     /// スイッチの影響を受けるオブジェクト
     /// </summary>
     [SerializeField]
@@ -28,6 +46,7 @@ public class Switch : MonoBehaviour
     {
         if (other.gameObject.tag == Enemy_Tag || other.gameObject.tag == Player_Tag) {
             Object.SetActive(false);
+            Mesh.material = OnMaterial;
         }
     }
 
@@ -38,6 +57,7 @@ public class Switch : MonoBehaviour
     {
         if (other.gameObject.tag == Enemy_Tag || other.gameObject.tag == Player_Tag) {
             Object.SetActive(true);
+            Mesh.material = OffMaterial;
         }
     }
 }
