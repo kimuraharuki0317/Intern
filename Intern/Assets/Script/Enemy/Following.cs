@@ -29,11 +29,6 @@ public class Following : MonoBehaviour
     float ChaseSpeed = 1.0f;
 
     /// <summary>
-    /// 見つかっているか
-    /// </summary>
-    bool find = false;
-
-    /// <summary>
     /// 追跡対象
     /// </summary>
     GameObject targetObject;
@@ -41,7 +36,7 @@ public class Following : MonoBehaviour
     void Update()
     {
         // 見つかっていたら追跡を行う
-        if (find) {
+        if (targetObject != null) {
             var moveVector = Vector3.Normalize(targetObject.transform.position - EnemyObject.transform.position);
             moveVector.y = 0;
             EnemyObject.transform.forward = -moveVector;
@@ -56,7 +51,6 @@ public class Following : MonoBehaviour
     {
         if (other.gameObject.tag == Player_Tag) {
             EnemyMovement.enabled = false;
-            find = true;
             targetObject = other.gameObject;
         }
     }
@@ -68,7 +62,6 @@ public class Following : MonoBehaviour
     {
         if (other.gameObject.tag == Player_Tag) {
             targetObject = null;
-            find = false;
             EnemyMovement.enabled = true;
         }
     }
