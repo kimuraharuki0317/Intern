@@ -69,6 +69,5 @@ public class TreadEnemy : MonoBehaviour
         Time.timeScale = HitStopSpeed;
         yield return new WaitForSecondsRealtime(HitStopTime);
         Time.timeScale = 1.0f;
-
     }
 }

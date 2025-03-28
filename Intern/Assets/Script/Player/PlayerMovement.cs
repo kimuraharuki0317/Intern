@@ -25,10 +25,38 @@ public class PlayerMovement : MonoBehaviour
     float JumpPower = 5.0f;
 
     /// <summary>
-    /// トレイル
+    /// 移動エフェクト
     /// </summary>
     [SerializeField]
-    TrailRenderer Trai;
+    ParticleSystem MoveParticle;
+
+    /// <summary>
+    /// 空中にいるときのトレイル
+    /// </summary>
+    [SerializeField]
+    TrailRenderer Trail;
+
+    /// <summary>
+    /// 接地しているか
+    /// </summary>
+    bool touchGround;
+
+    /// <summary>
+    /// 直前フレームに接地していたか
+    /// </summary>
+    bool touchGroundOld;
+
+    /// <summary>
+    /// ジャンプ、着地時のエフェクト
+    /// </summary>
+    [SerializeField]
+    GameObject JumpEffect;
+
+    /// <summary>
+    /// ジャンプ、着地時のエフェクトの回転
+    /// </summary>
+    [SerializeField]
+    Vector3 JumpEffectRotaion;
 
     /// <summary>
     /// 接地確認コンポーネント
@@ -43,6 +71,24 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody Rb;
 
     void Update()
+    {
+        touchGroundOld = touchGround;
+        touchGround = CheckGround.GetHitGround();
+
+        MoveAxis();
+        MoveSky();
+
+        // 接地、ジャンプ時にエフェクトを生成
+        if (touchGround != touchGroundOld) {
+            var effect = Instantiate(JumpEffect, transform.position, Quaternion.identity);
+            effect.transform.rotation = Quaternion.Euler(JumpEffectRotaion);
+        }
+    }
+
+    /// <summary>
+    /// 地上の移動を行う
+    /// </summary>
+    void MoveAxis()
     {
         // 移動ベクトル
         var moveVector = Vector3.zero;
@@ -71,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (moveVector != Vector3.zero) {
-
             // Y 成分を 0 にする
             moveVector.y = 0;
 
@@ -79,21 +124,33 @@ public class PlayerMovement : MonoBehaviour
             transform.forward = moveVector;
 
             // ダッシュ計算
-            var speed = MoveSpeed;
-            if (Input.GetKey(KeyCode.LeftShift)) {
-                speed *= MoveSpeed;
-                Trai.enabled = true;
-            } else {
-                Trai.enabled = false;
-            }
+            var speed = Input.GetKey(KeyCode.LeftShift) ? MoveSpeed * DashSpeed : MoveSpeed;
 
             // 実際に移動させる
             transform.position += transform.forward * speed * Time.deltaTime;
+
+            if (!MoveParticle.isPlaying && touchGround) {
+                MoveParticle.Play(true);
+            }
         }
 
+        // 空中にいるか動いていない場合はパーティクル生成停止
+        if (!touchGround || moveVector == Vector3.zero) {
+            MoveParticle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+    }
+
+    /// <summary>
+    /// 空中の移動を行う
+    /// </summary>
+    void MoveSky()
+    {
         // スペースキー押下かつ接地していたらジャンプ
-        if (Input.GetKeyDown(KeyCode.Space) && CheckGround.GetHitGround()) {
+        if (Input.GetKeyDown(KeyCode.Space) && touchGround) {
             Rb.AddForce(JumpPower * Vector3.up, ForceMode.Impulse);
         }
+
+        // 空中にいるかに応じてトレイルを切り替える
+        Trail.emitting = !touchGround;
     }
 }
