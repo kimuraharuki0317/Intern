@@ -66,6 +66,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eea524611dbe2449be0b115680b1281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ReactionObject: {fileID: 3047691612217724768, guid: 971d10c46020f1f43b3fff53423b767b, type: 3}
+  ReactionOffset: {x: 0, y: 1.3, z: 0}
+  StopTime: 1
   EnemyObject: {fileID: 8260864244561335556}
   EnemyMovement: {fileID: 5966227093920301013}
   ChaseSpeed: 1
@@ -392,6 +395,7 @@ MonoBehaviour:
   MoveSpeed: 1
   InitRatio: 0
   ReturnRotation: 1
+  ReverseRotation: 0
   StopTime: 0
 --- !u!4 &8786431543347089342 stripped
 Transform:
