@@ -1220,4 +1220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e029522896f15c459eb7becd8b933f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mesh: {fileID: 6900157179097960380}
+  OnMaterial: {fileID: 2100000, guid: 93cd963bec642aa47a6b076f550517d2, type: 2}
+  OffMaterial: {fileID: 2100000, guid: 1b29c137de5e31f47b64e7c5bbc443c1, type: 2}
   Object: {fileID: 0}

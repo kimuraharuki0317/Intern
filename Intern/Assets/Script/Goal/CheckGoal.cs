@@ -56,7 +56,7 @@ public class CheckGoal : MonoBehaviour
 
             // 遅延を掛けてシーンを切り替え、演出オブジェクトを生成する
             ChangeSceneComponent.Change(Result_Scene_Name, Scene_Trandition_Delay);
-            Instantiate(ClearEffect);
+            Instantiate(ClearEffect, transform.position, Quaternion.identity);
 
             // カウントダウン停止、残り時間をスコアに加算
             TimeCounterComponent.StopCount();

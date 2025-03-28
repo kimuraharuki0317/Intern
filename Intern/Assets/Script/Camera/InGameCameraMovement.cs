@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -31,10 +32,28 @@ public class InGameCameraMovement : MonoBehaviour
     float CameraDistance = 3.0f;
 
     /// <summary>
+    /// プレイヤーとの最小距離
+    /// </summary>
+    [SerializeField]
+    float CameraDistanceMin = 2.0f;
+
+    /// <summary>
+    /// プレイヤーとの距離
+    /// </summary>
+    [SerializeField]
+    float CameraDistanceMax = 7.0f;
+
+    /// <summary>
     /// カメラ追従速度
     /// </summary>
     [SerializeField]
     float CameraFollowingSpeed = 2.5f;
+
+    /// <summary>
+    /// Y座標追跡の補正値
+    /// </summary>
+    [SerializeField]
+    float CameraFollowingSpeedY = 30f;
 
     /// <summary>
     /// カメラが追跡をやめる半径
@@ -60,23 +79,40 @@ public class InGameCameraMovement : MonoBehaviour
     InputAction mouseMoveAction;
 
     /// <summary>
+    /// 生成されたInputActionのインスタンスを保持する
+    /// </summary>
+    InputAction mouseWheel;
+
+    /// <summary>
     /// 生成されたInputSystem_Actionsのインスタンスを保持する
     /// </summary>
     InputSystem_Actions inputActions;
+
+    /// <summary>
+    /// ターゲットのY座標
+    /// </summary>
+    float targetPositionY;
+
+    /// <summary>
+    /// 直前のターゲットのY座標
+    /// </summary>
+    float targetPositionYOld;
 
     void Start()
     {
         // カーソル固定
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        transform.position = PlayerTransform.position + Vector3.back;
+        transform.position = PlayerTransform.position + Vector3.back * CameraDistance;
 
         // InputActionクラスを読み込む
         inputActions = new InputSystem_Actions();
         mouseMoveAction = inputActions.Player.MouseMovement;
+        mouseWheel = inputActions.Player.MouseWheel;
 
         // 入力アクションの開始を登録
         mouseMoveAction.Enable();
+        mouseWheel.Enable();
     }
 
     void OnDestroy()
@@ -95,6 +131,16 @@ public class InGameCameraMovement : MonoBehaviour
 
         // 追従処理
         Tracking();
+    }
+
+    void LateUpdate()
+    {
+        targetPositionYOld = targetPositionY;
+        targetPositionY = PlayerTransform.position.y;
+
+        if (targetPositionY != targetPositionYOld) {
+            transform.position += new Vector3(0, targetPositionY - targetPositionYOld, 0);
+        }
     }
 
     /// <summary>
@@ -126,10 +172,22 @@ public class InGameCameraMovement : MonoBehaviour
         var cameraToPlayer = PlayerTransform.position - transform.position;
         var distance = cameraToPlayer.magnitude;
 
+        var scrollValue = mouseWheel.ReadValue<Vector2>();
+        CameraDistance -= scrollValue.y;
+        CameraDistance = Mathf.Min(CameraDistance, CameraDistanceMax);
+        CameraDistance = Mathf.Max(CameraDistance, CameraDistanceMin);
+
         if (CameraDistance < distance - CameraStopRange) {
             transform.position += cameraToPlayer.normalized * Time.deltaTime * CameraFollowingSpeed;
         } else if (distance + CameraStopRange < CameraDistance) {
             transform.position -= cameraToPlayer.normalized * Time.deltaTime * CameraFollowingSpeed;
+        }
+
+        targetPositionYOld = targetPositionY;
+        targetPositionY = PlayerTransform.position.y;
+
+        if (targetPositionY != targetPositionYOld) {
+            transform.position += new Vector3(0, (targetPositionY - targetPositionYOld) * Time.deltaTime * CameraFollowingSpeedY, 0);
         }
     }
 }

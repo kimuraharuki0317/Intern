@@ -46,7 +46,7 @@ Material:
     - _RedStrength: 0.2
     - _Smoothness: 1
     m_Colors:
-    - _MainColor: {r: 0.17528479, g: 0.3679245, b: 0.20992616, a: 0}
+    - _MainColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &1871361069091007361
