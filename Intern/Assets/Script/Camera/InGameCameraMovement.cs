@@ -137,8 +137,8 @@ public class InGameCameraMovement : MonoBehaviour
     {
         targetPositionYOld = targetPositionY;
         targetPositionY = PlayerTransform.position.y;
-        if (targetPositionY != targetPositionYOld)
-        {
+
+        if (targetPositionY != targetPositionYOld) {
             transform.position += new Vector3(0, targetPositionY - targetPositionYOld, 0);
         }
     }
