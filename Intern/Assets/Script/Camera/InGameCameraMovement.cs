@@ -11,12 +11,6 @@ public class InGameCameraMovement : MonoBehaviour
     /// プレイヤーのトランスフォーム
     /// </summary>
     [SerializeField]
-    bool aaa;
-
-    /// <summary>
-    /// プレイヤーのトランスフォーム
-    /// </summary>
-    [SerializeField]
     Transform PlayerTransform;
 
     /// <summary>
@@ -191,7 +185,8 @@ public class InGameCameraMovement : MonoBehaviour
 
         targetPositionYOld = targetPositionY;
         targetPositionY = PlayerTransform.position.y;
-        if (targetPositionY != targetPositionYOld&& aaa) {
+
+        if (targetPositionY != targetPositionYOld) {
             transform.position += new Vector3(0, (targetPositionY - targetPositionYOld) * Time.deltaTime * CameraFollowingSpeedY, 0);
         }
     }
